@@ -8,7 +8,7 @@ const path = require('path');
 dotenv.config();
 
 const app = express();
-const port = 3001; // Running backend on 3001, static server is on 3000
+const port = process.env.PORT || 8080; // Cloud Run injects PORT automatically
 
 // Middleware
 app.use(cors());
@@ -63,7 +63,12 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+// Health check route
+app.get('/health', (req, res) => {
+  res.send('App is running successfully');
+});
+
 // Start server
 app.listen(port, () => {
-  console.log(`🚀 CivicIQ Backend running securely on http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
