@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CivicIQ — AI Election Education Assistant</title>
+  <meta name="description" content="Learn how elections work step-by-step with CivicIQ — an interactive, gamified civic education platform." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+  <div id="app">
+
+    <!-- ══ SCREEN 0: WELCOME ══ -->
+    <section id="screen-welcome" class="screen active">
+      <div class="welcome-glow"></div>
+      <header class="welcome-header">
+        <div class="logo">
+          <span class="logo-icon">🗳️</span>
+          <span class="logo-text">Civic<span class="logo-accent">IQ</span></span>
+        </div>
+        <div class="badge-mini">AI-Powered</div>
+      </header>
+
+      <div class="welcome-body">
+
+        <!-- TOP: Hero left + Onboarding right -->
+        <div class="welcome-top">
+          <div class="hero-text-left animate-in" style="--delay:0.1s">
+            <div class="hero-tag">🏛️ Civic Education Platform</div>
+            <h1 class="hero-title">Understand <span class="gradient-text">Elections</span><br/>Like Never Before</h1>
+            <p class="hero-sub">Interactive · Gamified · AI-Guided · Multi-Country</p>
+            <div class="hero-stats">
+              <div class="hero-stat"><span class="stat-num">13</span><span class="stat-label">Steps</span></div>
+              <div class="hero-stat"><span class="stat-num">4</span><span class="stat-label">Countries</span></div>
+              <div class="hero-stat"><span class="stat-num">5</span><span class="stat-label">Levels</span></div>
+            </div>
+
+            <!-- Two info buttons below stats -->
+            <div class="home-btns animate-in" style="--delay:0.25s">
+              <button class="home-info-btn" id="home-btn-demo" onclick="showTool('demo2024')">
+                <span class="home-info-icon">🇮🇳</span>
+                <div class="home-info-text">
+                  <div class="home-info-title">Demo 2024 Process</div>
+                  <div class="home-info-sub">Real Lok Sabha election · step by step</div>
+                </div>
+                <span class="home-info-arrow">→</span>
+              </button>
+              <button class="home-info-btn" id="home-btn-system" onclick="showTool('indiansystem')">
+                <span class="home-info-icon">🏛️</span>
+                <div class="home-info-text">
+                  <div class="home-info-title">Indian System After Election</div>
+                  <div class="home-info-sub">Parliament, roles &amp; who does what</div>
+                </div>
+                <span class="home-info-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="welcome-right animate-in" style="--delay:0.2s">
+            <div class="onboarding-card">
+              <h2 class="card-title">Let's Personalize Your Journey</h2>
+              <p class="card-sub">Answer 3 quick questions to get started</p>
+              <div class="form-group">
+                <label class="form-label">🌍 Your Country</label>
+                <div class="country-grid" id="country-grid">
+                  <button class="country-btn" data-country="India" id="btn-india">🇮🇳 India</button>
+                  <button class="country-btn" data-country="USA" id="btn-usa">🇺🇸 USA</button>
+                  <button class="country-btn" data-country="UK" id="btn-uk">🇬🇧 UK</button>
+                  <button class="country-btn" data-country="General" id="btn-general">🌐 General</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">🎓 Your Experience</label>
+                <div class="exp-grid" id="exp-grid">
+                  <button class="exp-btn" data-exp="beginner" id="btn-beginner"><span class="exp-icon">🌱</span><span class="exp-label">Beginner</span><span class="exp-desc">New to this</span></button>
+                  <button class="exp-btn" data-exp="intermediate" id="btn-intermediate"><span class="exp-icon">📚</span><span class="exp-label">Learner</span><span class="exp-desc">Know a little</span></button>
+                  <button class="exp-btn" data-exp="advanced" id="btn-advanced"><span class="exp-icon">🎯</span><span class="exp-label">Advanced</span><span class="exp-desc">Deep dive</span></button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">⚡ Learning Mode</label>
+                <div class="mode-grid" id="mode-grid">
+                  <button class="mode-btn" data-mode="quick" id="btn-quick"><span>⚡</span> Quick (30-sec)</button>
+                  <button class="mode-btn" data-mode="deep" id="btn-deep"><span>🔬</span> Deep Dive</button>
+                  <button class="mode-btn" data-mode="interactive" id="btn-interactive"><span>🎮</span> Interactive</button>
+                </div>
+              </div>
+              <button class="start-btn" id="start-btn" disabled>
+                <span id="start-btn-text">Select all options to begin →</span>
+              </button>
+            </div>
+          </div>
+        </div><!-- /.welcome-top -->
+
+      </div><!-- /.welcome-body -->
+    </section>
+
+    <!-- ══ SCREEN 1: MAIN DASHBOARD ══ -->
+    <section id="screen-main" class="screen">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo small"><span class="logo-icon">🗳️</span><span class="logo-text">Civic<span class="logo-accent">IQ</span></span></div>
+          <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+        </div>
+        <div class="profile-card" id="profile-card">
+          <div class="profile-avatar" id="profile-avatar">🎓</div>
+          <div class="profile-info">
+            <div class="profile-country" id="profile-country">—</div>
+            <div class="profile-mode" id="profile-mode">—</div>
+          </div>
+        </div>
+        <div class="xp-section">
+          <div class="xp-label"><span>⚡ XP</span><span id="xp-display">0 / 500</span></div>
+          <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+          <div class="level-label">Level <span id="current-level">1</span> — <span id="level-name">Rookie Voter</span></div>
+        </div>
+        <nav class="level-nav" id="level-nav">
+          <div class="nav-section-title">Learning Path</div>
+          <button class="nav-btn active" data-level="0" id="nav-intro"><span class="nav-icon">🏛️</span><span class="nav-label">Intro &amp; Basics</span><span class="nav-badge unlocked">✓</span></button>
+          <button class="nav-btn locked" data-level="1" id="nav-registration"><span class="nav-icon">📋</span><span class="nav-label">Registration</span><span class="nav-badge">🔒</span></button>
+          <button class="nav-btn locked" data-level="2" id="nav-campaign"><span class="nav-icon">📣</span><span class="nav-label">Campaigning</span><span class="nav-badge">🔒</span></button>
+          <button class="nav-btn locked" data-level="3" id="nav-voting"><span class="nav-icon">🗳️</span><span class="nav-label">Voting Simulation</span><span class="nav-badge">🔒</span></button>
+          <button class="nav-btn locked" data-level="4" id="nav-counting"><span class="nav-icon">📊</span><span class="nav-label">Counting &amp; Results</span><span class="nav-badge">🔒</span></button>
+        </nav>
+        <div class="badge-section">
+          <div class="nav-section-title">Badges Earned</div>
+          <div class="badge-grid" id="badge-grid">
+            <div class="badge-item locked" id="badge-0" title="Civic Starter">🏛️</div>
+            <div class="badge-item locked" id="badge-1" title="Registered">📋</div>
+            <div class="badge-item locked" id="badge-2" title="Campaign Pro">📣</div>
+            <div class="badge-item locked" id="badge-3" title="Vote Ready">🗳️</div>
+            <div class="badge-item locked" id="badge-4" title="Democracy Champion">🏆</div>
+          </div>
+        </div>
+        <div class="quick-tools">
+          <div class="nav-section-title">Quick Tools</div>
+          <button class="tool-btn" id="tool-checklist">📋 First Vote Checklist</button>
+          <button class="tool-btn" id="tool-eligible">✅ Am I Eligible?</button>
+          <button class="tool-btn" id="tool-compare">🌍 Compare Countries</button>
+          <button class="tool-btn" id="tool-glossary">📖 Glossary</button>
+          <button class="tool-btn" id="tool-dos">✔️ Do's &amp; Don'ts</button>
+          <button class="tool-btn tool-btn--highlight" id="tool-demo2024">🇮🇳 2024 Live Demo</button>
+          <button class="tool-btn tool-btn--highlight" id="tool-indiansystem">🏛️ Indian System</button>
+        </div>
+        <button class="restart-btn" id="restart-btn">↩ Start Over</button>
+      </aside>
+
+      <main class="main-area">
+        <div class="topbar">
+          <div class="topbar-left">
+            <button class="sidebar-toggle-mobile" id="sidebar-toggle-mobile" aria-label="Menu">☰</button>
+            <div class="step-progress" id="step-progress">
+              <span id="step-label">Step 1/5</span>
+              <div class="step-dots" id="step-dots"></div>
+            </div>
+          </div>
+          <div class="topbar-right">
+            <div class="mode-tag" id="mode-tag">⚡ Quick</div>
+            <div class="streak-tag" id="streak-tag">🔥 0 streak</div>
+          </div>
+        </div>
+        <div class="chat-container" id="chat-container">
+          <div class="chat-messages" id="chat-messages"></div>
+        </div>
+        <div class="input-area">
+          <div class="quick-actions" id="quick-actions"></div>
+          <div class="input-row">
+            <textarea id="user-input" class="user-input" placeholder="Type your question or 'continue'…" rows="1" aria-label="User message input"></textarea>
+            <button class="send-btn" id="send-btn" aria-label="Send message">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <!-- QUIZ OVERLAY -->
+    <div class="overlay" id="quiz-overlay">
+      <div class="quiz-modal" id="quiz-modal">
+        <div class="quiz-header">
+          <span class="quiz-level-tag" id="quiz-level-tag">Level Quiz</span>
+          <h2 class="quiz-title" id="quiz-title">Quick Check!</h2>
+        </div>
+        <div class="quiz-question" id="quiz-question"></div>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-feedback" id="quiz-feedback"></div>
+        <button class="quiz-next-btn" id="quiz-next-btn" style="display:none">Next →</button>
+      </div>
+    </div>
+
+    <!-- BADGE OVERLAY -->
+    <div class="overlay" id="badge-overlay">
+      <div class="badge-award-modal">
+        <div class="badge-burst" id="badge-burst">🏆</div>
+        <h2 class="badge-award-title" id="badge-award-title">Badge Unlocked!</h2>
+        <p class="badge-award-sub" id="badge-award-sub"></p>
+        <button class="badge-close-btn" id="badge-close-btn">Continue Learning →</button>
+      </div>
+    </div>
+
+    <!-- TOOL OVERLAY -->
+    <div class="overlay" id="tool-overlay">
+      <div class="tool-modal">
+        <button class="tool-close-btn" id="tool-close-btn">✕</button>
+        <div class="tool-content" id="tool-content"></div>
+      </div>
+    </div>
+
+  </div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
